@@ -1,0 +1,18 @@
+{
+  "name": "estudando-cypress",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "node": "v20.12.1",
+  "scripts": {
+    "cypress:web":"npx cypress open",
+    "cypress:headless":"npx cypress run --browser eletron"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cypress": "^13.7.2"
+  }
+}
