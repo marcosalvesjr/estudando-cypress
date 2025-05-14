@@ -7,6 +7,7 @@ class RegisterForm {
     imageUrlInput: () => cy.get("#imageUrl"),
     urlFeedback: () => cy.get("#urlFeedback"),
     btnSubmit: () => cy.get("#btnSubmit"),
+    hitEnter: () => cy.focused().type({ enter }),
   };
   typeTitle(text) {
     if (!text) return;
@@ -26,7 +27,7 @@ class RegisterForm {
 const registerForm = new RegisterForm();
 const colors = {
   error: "rgb(220, 53, 69)",
-  success: "",
+  success: "#198754",
 };
 
 describe("Image Registration", () => {
@@ -64,8 +65,29 @@ describe("Image Registration", () => {
       registerForm.elements.titleInput().should(([element]) => {
         const styles = window.getComputedStyle(element);
         const border = styles.getPropertyValue("border-right-color");
-        assert.strictEqual(border, colors.error);
+        assert.strictEqual(border, colors.success);
       });
+    });
+  });
+
+  describe(`Submitting an image with valid inputs using enter key`, () => {
+    const input = {
+      title: "Alien BR",
+      url: "https://cdn.mos.cms.futurecdn.net/eM9EvWyDxXcnQTTyH8c8p5-1200-80.jpg",
+    };
+
+    after(() => {
+      cy.clearAllLocalStorage();
+    });
+
+    it("Given I am on the image registration page", () => {
+      cy.visit("/");
+    });
+    it(`When i enter ${input.title} in the title field`, () => {
+      registerForm.typeTitle(input.title);
+    });
+    it(`When i enter ${input.title} in the URL field`, () => {
+      registerForm.typeUrl(input.url);
     });
   });
 });
